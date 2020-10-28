@@ -9,12 +9,9 @@ import App from '../src/components/App';
 import { fetchDataForRender } from './fetchDataForRender';
 import { indexHtml } from './indexHtml';
 import stats from '../build/react-loadable.json';
-import { ServerDataProvider } from '../src/state/serverDataContext';
 import store from '../src/redux/store';
 import { Provider } from 'react-redux';
-import getData, { keys } from '../src/data';
 import _ from 'lodash';
-import { getMenu } from '../src/data/Menu';
 import { ChakraProvider } from '@chakra-ui/core';
 
 const ServerApp = ({ context, data, helmetTags, location }) => {
@@ -70,104 +67,38 @@ function renderApp(ServerApp, data, req, res, jsonData) {
   }
 }
 
-function reactApplicationMiddleware(body) {
-  const school = JSON.parse(body);
-  const schoolName = _.toLower(getData(school, keys.NAME));
-  const schoolCity = getData(school, keys.CITY);
-  const schoolState = getData(school, keys.STATE);
+function reactApplicationMiddleware(bodyJSON) {
+  // const bodyJSON = JSON.parse(body);
   const helmetTags = [
-    <title key="title">{_.toUpper(schoolName)} | School Website</title>,
-    <meta key="title-meta" name="title" content={schoolName} />,
+    <title key="title">{bodyJSON.title}</title>,
+    <meta key="title-meta" name="title" content={bodyJSON.title} />,
     <meta
       key="description"
       name="description"
-      content={getData(school, keys.INTRO)}
+      content={bodyJSON.description}
     />,
     <meta
       key="keywords"
       name="keywords"
-      content={[
-        schoolName,
-        ...schoolName.split(' '),
-        getData(school, keys.ADDRESS),
-        schoolCity,
-        `Best School in ${schoolCity}`,
-        `Top School in ${schoolCity}`,
-        `List of schools in ${schoolCity}`,
-        `Best School in ${schoolState}`,
-        `Top School in ${schoolState}`,
-        getData(school, keys.EMAIL),
-        getData(school, keys.PRIMARY_CONTACT),
-        getData(school, keys.PINCODE),
-        'Schoollog',
-        'SCHOOLLOG'
-      ].join(',')}
+      content={bodyJSON.keywords}
     />,
     <meta
       key="geo.position"
       name="geo.position"
-      content={`${getData(school, keys.MAP_LATITUDE)}; ${getData(
-        school,
-        keys.MAP_LONGITUDE
-      )}`}
+      content={`${bodyJSON.latitude}; ${bodyJSON.longitude}`}
     />,
     <meta
       key="geo.placename"
       name="geo.placename"
-      content={`${getData(school, keys.ADDRESS)} ${schoolCity}`}
+      content={bodyJSON.placename}
     />,
-    <meta key="geo.region" name="geo.region" content={schoolState} />,
+    <meta key="geo.region" name="geo.region" content={bodyJSON.region} />,
     <meta key="robots" name="robots" content="index,follow" />,
     <meta key="coverage" name="coverage" content="Worldwide" />
   ];
 
   let storeData = {
-    school: school,
-    status: 'FETCHING',
-    menu: getMenu(
-      school.features
-        ? _.union(school.features, [
-            1,
-            2,
-            3,
-            15,
-            17,
-            18,
-            19,
-            20,
-            21,
-            32,
-            43,
-            44
-          ])
-        : [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            23,
-            33,
-            43,
-            44
-          ]
-    )
+    bodyJSON,
   };
 
   return { storeData, helmetTags };
