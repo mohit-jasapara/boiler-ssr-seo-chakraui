@@ -9,10 +9,14 @@ import App from '../src/components/App';
 import { fetchDataForRender } from './fetchDataForRender';
 import { indexHtml } from './indexHtml';
 import stats from '../build/react-loadable.json';
-import store from '../src/redux/store';
+import configureStore from '../src/redux/store';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
 import { ChakraProvider } from '@chakra-ui/core';
+import STATUS from '../src/Constants';
+import getHelmetTags from './getHelmetTags';
+
+const store = configureStore();
 
 const ServerApp = ({ context, data, helmetTags, location }) => {
   return (
@@ -40,7 +44,12 @@ function renderApp(ServerApp, data, req, res, jsonData) {
 
   let { storeData, helmetTags } = reactApplicationMiddleware(jsonData);
 
-  data = Object.assign({}, data, storeData);
+  data = Object.assign({}, data, {
+    appReducer: {
+      status: STATUS.FETCHING,
+      data: storeData.bodyJSON
+    }
+  });
 
   const markup = ReactDOMServer.renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
@@ -67,38 +76,12 @@ function renderApp(ServerApp, data, req, res, jsonData) {
   }
 }
 
-function reactApplicationMiddleware(bodyJSON) {
+export function reactApplicationMiddleware(bodyJSON) {
   // const bodyJSON = JSON.parse(body);
-  const helmetTags = [
-    <title key="title">{bodyJSON.title}</title>,
-    <meta key="title-meta" name="title" content={bodyJSON.title} />,
-    <meta
-      key="description"
-      name="description"
-      content={bodyJSON.description}
-    />,
-    <meta
-      key="keywords"
-      name="keywords"
-      content={bodyJSON.keywords}
-    />,
-    <meta
-      key="geo.position"
-      name="geo.position"
-      content={`${bodyJSON.latitude}; ${bodyJSON.longitude}`}
-    />,
-    <meta
-      key="geo.placename"
-      name="geo.placename"
-      content={bodyJSON.placename}
-    />,
-    <meta key="geo.region" name="geo.region" content={bodyJSON.region} />,
-    <meta key="robots" name="robots" content="index,follow" />,
-    <meta key="coverage" name="coverage" content="Worldwide" />
-  ];
+  let helmetTags = getHelmetTags(bodyJSON);
 
   let storeData = {
-    bodyJSON,
+    bodyJSON
   };
 
   return { storeData, helmetTags };

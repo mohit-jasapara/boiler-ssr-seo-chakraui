@@ -2,7 +2,7 @@ import Requester from '../../utils/Requester';
 import BASE_URL from '../../common/BaseUrl';
 import URIS from '../Request_URIS';
 
-const GEN_ERROR = 'Something went wrong';
+const GEN_ERROR = 'Oops! Something went wrong.';
 
 const RequestURIS = {};
 Object.keys(URIS).forEach(key => {
@@ -12,61 +12,22 @@ Object.keys(URIS).forEach(key => {
 });
 
 export const actions = {
-  LOAD_SCHOOL_DATA: 1,
-  LOADED_SCHOOL_DATA: 2,
-  FAILED_SCHOOL_DATA: 3,
-  DEMO_LOADED_SCHOOL_DATA: 4,
-  LOAD_CONTACT_REQUEST: 5,
-  LOADED_CONTACT_REQUEST: 6,
-  FAILED_CONTACT_REQUEST: 7,
-  LOAD_ADMISSIONFORM_REQUEST: 8,
-  LOADED_ADMISSIONFORM_REQUEST: 9,
-  FAILED_ADMISSIONFORM_REQUEST: 10,
-  LOAD_TC_DATA: 11,
-  LOADED_TC_DATA: 12,
-  FAILED_TC_DATA: 13,
-  SHOW_SCHOOL_DATA: 14,
-  GET_WEBSITE_SUBJECTS: 15,
-  RECEIVE_WEBSITE_SUBJECTS: 16,
-  FAILED_WEBSITE_SUBJECTS: 17,
-  ADD_CAREER_FORM: 18,
-  ADDED_CAREER_FORM: 19,
-  FAILED_CAREER_FORM: 20,
-  GET_STANDARDS: 21,
-  RECEIVED_STANDARDS: 22,
-  FAILED_STANDARDS: 23,
-  GET_STATES: 24,
-  RECEIVED_STATES: 25,
-  FAILED_STATES: 26,
-  GET_BIRTHDAYS: 27,
-  RECEIVED_BIRTHDAYS: 28,
-  FAILED_BIRTHDAYS: 29
+  FETCH_HOST_DATA: 1,
+  SUCCESS_HOST_DATA: 2,
+  FAILED_HOST_DATA: 3,
+
+  SHOW_HOST_DATA: 14
 };
 
-export function getSchoolAction(host) {
-  if (host.search('schoollog') === -1) {
-    // const host = psl.parse(location.hostname);
-  }
+export function fetchHostDataAction(host) {
   return genGetWrapper(
     {
-      url: host,
-      include: 'website,state'
+      url: host
     },
-    RequestURIS.SCHOOL_DATA_URL,
-    actions.LOAD_SCHOOL_DATA,
-    actions.LOADED_SCHOOL_DATA,
-    actions.FAILED_SCHOOL_DATA
-  );
-}
-
-export function getStates() {
-  return genGetWrapper(
-    {},
-    RequestURIS.GET_STATES,
-    actions.GET_STATES,
-    actions.RECEIVED_STATES,
-    actions.FAILED_STATES,
-    false
+    RequestURIS.HOST_DATA_URL,
+    actions.FETCH_HOST_DATA,
+    actions.SUCCESS_HOST_DATA,
+    actions.FAILED_HOST_DATA
   );
 }
 

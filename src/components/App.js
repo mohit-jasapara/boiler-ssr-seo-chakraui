@@ -1,46 +1,48 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { actions, getSchoolAction, getStates } from '../redux/actions';
+import { actions, fetchHostDataAction } from '../redux/actions';
 import { connect } from 'react-redux';
 import Home from '../routes/Home';
 import MainHeader from './Header';
+import STATUS from '../Constants';
+import { Skeleton } from '@chakra-ui/core';
 
-const mapStateToProps = state => ({ data: state });
+const mapStateToProps = state => ({ appReducer: state.appReducer });
 
 const mapDispatchToProps = dispatch => ({
-  loadSchoolData(host) {
-    dispatch(getSchoolAction(host));
+  fetchHostData(host) {
+    dispatch(fetchHostDataAction(host));
   },
 
-  loadStates() {
-    dispatch(getStates());
-  },
-
-  showSchoolData() {
-    dispatch({ type: actions.SHOW_SCHOOL_DATA });
+  showHostData() {
+    dispatch({ type: actions.SHOW_HOST_DATA });
   }
 });
 
 const App = props => {
   useEffect(() => {
-    if (!props.data) {
-      props.loadSchoolData(window.location.host);
+    if (!props.appReducer) {
+      props.fetchHostData(window.location.host);
     } else {
-      setTimeout(props.showSchoolData(), 1000);
+      setTimeout(props.showHostData(), 2000);
     }
   }, []);
-  return (
+  console.log('App', props);
+  return props.appReducer.status != STATUS.SUCCESS ? (
+    <Skeleton height="25px" />
+  ) : (
     <div className="app">
-      <MainHeader />
+      <MainHeader data={props.appReducer.data} />
       <Switch>
-        <Route exact path="/" render={() => <Home {...props} />} />
+        <Route
+          exact
+          path="/"
+          render={() => <Home data={props.appReducer.data} />}
+        />
       </Switch>
     </div>
   );
 };
 
-const MainWrapper = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+const MainWrapper = connect(mapStateToProps, mapDispatchToProps)(App);
 export default MainWrapper;

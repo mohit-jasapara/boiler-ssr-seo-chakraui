@@ -5,12 +5,11 @@ import Loadable from 'react-loadable';
 import App from './components/App';
 import './styles/index.scss';
 import { Provider } from 'react-redux';
-import MainReducer from './redux/reducers/MainReducer';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import configureStore from './redux/store';
 
 const serverData = window.__SERVER_DATA__;
-const store = createStore(MainReducer, serverData, applyMiddleware(thunk));
+// delete window.__PRELOADED_STATE__;
+const store = configureStore(serverData);
 
 export const main = () => {
   Loadable.preloadReady().then(() => {

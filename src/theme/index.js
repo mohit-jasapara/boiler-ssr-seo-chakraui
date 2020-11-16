@@ -1,9 +1,8 @@
 import { theme, extendTheme } from '@chakra-ui/core';
 
-const hostelColor = {
-  girls: { bg: '#ffc2c5', active: '#FF99A0' },
-  boys: { bg: '#E7FFAD', active: '#DAFF85' },
-  staff: { bg: '#C2DDFF', active: '#85BCFF' }
+const hostColor = {
+  host1: { bg: '#ffc2c5', active: '#FF99A0' },
+  host2: { bg: '#E7FFAD', active: '#DAFF85' }
 };
 
 const customTheme = extendTheme({
@@ -30,7 +29,7 @@ const customTheme = extendTheme({
     sidebar: {
       bg: '#2a3b50'
     },
-    hostel: hostelColor,
+    hostTheme: hostColor,
     text: {
       secondary: '#b7b7b7'
     },
