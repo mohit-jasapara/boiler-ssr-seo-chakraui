@@ -1,8 +1,8 @@
 # Demo
 
-[Check Demo: Host1](https://ssr-seo-boiler.herokuapp.com/?host=host1)
-[Check Demo: Host2](https://ssr-seo-boiler.herokuapp.com/?host=host2)
-[Check Demo: Default](https://ssr-seo-boiler.herokuapp.com/)
+- [Check Demo: Host1](https://ssr-seo-boiler.herokuapp.com/?host=host1)
+- [Check Demo: Host2](https://ssr-seo-boiler.herokuapp.com/?host=host2)
+- [Check Demo: Default](https://ssr-seo-boiler.herokuapp.com/)
 
 
 # Boiler with Server Side Rendering (SSR) & Server Side SEO ⚛️
