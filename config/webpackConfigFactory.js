@@ -57,7 +57,7 @@ module.exports = function(envType) {
   config.module = {
     rules: [
       // ESLint
-      {
+      /* {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
         use: [
@@ -69,7 +69,7 @@ module.exports = function(envType) {
           }
         ],
         include: resolvePath('../src')
-      },
+      }, */
 
       // Babel
       {
@@ -141,7 +141,7 @@ module.exports = function(envType) {
     ].filter(Boolean)
   };
 
-  config.optimization = IS_DEV
+/*   config.optimization = IS_DEV
     ? {}
     : {
         minimizer: [
@@ -156,7 +156,7 @@ module.exports = function(envType) {
           }),
           new OptimizeCSSAssetsPlugin({})
         ]
-      };
+      }; */
 
   config.plugins = [
     new webpack.DefinePlugin(env.forWebpackDefinePlugin),
