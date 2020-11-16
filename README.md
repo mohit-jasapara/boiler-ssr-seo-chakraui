@@ -1,3 +1,10 @@
+# Demo
+
+[Check Demo: Host1](https://ssr-seo-boiler.herokuapp.com/?host=host1)
+[Check Demo: Host2](https://ssr-seo-boiler.herokuapp.com/?host=host2)
+[Check Demo: Default](https://ssr-seo-boiler.herokuapp.com/)
+
+
 # Boiler with Server Side Rendering (SSR) & Server Side SEO ⚛️
 
 Tools like [create-react-app](https://github.com/facebook/create-react-app) have made setting up client-side React apps trivial, but transitioning to SSR is still kind of a pain in the ass. [Next.js](https://nextjs.org) is a powerhouse, and the [Razzle](https://github.com/jaredpalmer/razzle) tool looks like an absolute beast, but sometimes you just want to see the whole enchilada running your app. This is a sample setup for fully featured, server-rendered React application.

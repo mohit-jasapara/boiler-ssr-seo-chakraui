@@ -1,0 +1,21 @@
+{
+    "name": "SSR SEO Boiler",
+    "description": "ReactJS + chakra-ui + React Helmet + SSR + Server SEOP implementation.",
+    "keywords": [
+      "ReactJS",
+      "chakra-ui",
+      "react-helmet",
+      "ssr",
+      "seo",
+      "boiler"
+    ],
+    "website": "https://ssr-seo-boiler.herokuapp.com/",
+    "repository": "https://github.com/mohit-jasapara/boiler-ssr-seo-chakraui",
+    "logo": "https://ssr-seo-boiler.herokuapp.com/favicon.ico",
+    "success_url": "/",
+    "buildpacks": [
+      {
+        "url": "https://github.com/mars/create-react-app-buildpack"
+      }
+    ]
+  }
